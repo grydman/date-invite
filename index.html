@@ -2,64 +2,83 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Принудительно открывать в desktop-режиме -->
+    <meta name="viewport" content="width=1100">
+    <meta name="format-detection" content="telephone=no">
     <title>Для тебя 💖</title>
     <style>
-        * { box-sizing: border-box; }
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a8edea);
             background-size: 400% 400%;
             animation: gradient 15s ease infinite;
             text-align: center;
             color: white;
+            overflow: hidden;
             min-height: 100vh;
-            touch-action: manipulation;
         }
 
-        @keyframes gradient { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+        @keyframes gradient {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
 
         .container {
-            max-width: 420px;
-            margin: 0 auto;
-            padding: 20px 15px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            max-width: 480px;
+            margin: 40px auto;
+            padding: 20px;
         }
 
-        h1 { font-size: 2.4em; margin: 10px 0; }
-        h2 { font-size: 1.55em; margin: 10px 0 35px; }
+        h1 { font-size: 2.8em; margin: 15px 0 5px; }
+        h2 { font-size: 1.7em; margin: 10px 0 35px; }
 
-        .cat-container { width: 260px; margin: 20px auto; animation: catBob 3s infinite; }
-        @keyframes catBob { 0%,100%{transform:translateY(0) rotate(-5deg)} 50%{transform:translateY(-20px) rotate(5deg)} }
+        .cat-container {
+            width: 270px;
+            margin: 25px auto;
+            animation: catBob 3s ease-in-out infinite;
+        }
 
-        .cat { width: 100%; border-radius: 25px; }
+        @keyframes catBob {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-25px) rotate(5deg); }
+        }
+
+        .cat { width: 100%; border-radius: 30px; }
 
         .buttons {
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             gap: 25px;
-            margin-top: 20px;
-            position: relative;
-            min-height: 190px;
+            margin-top: 40px;
+            flex-wrap: wrap;
         }
 
         button {
-            padding: 25px 30px;
-            font-size: 1.6em;
+            padding: 18px 40px;
+            font-size: 1.5em;
             border-radius: 50px;
             border: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            min-height: 80px;
-            touch-action: manipulation;
+            cursor: pointer;
+            min-width: 160px;
         }
 
-        #yesBtn { background: linear-gradient(45deg, #ff4d6d, #ff6b8a); }
-        #noBtn  { background: #555; }
+        #yes { background: linear-gradient(45deg, #ff4d6d, #ff6b8a); }
+        #no  { background: #555; position: relative; }
+
+        .heart {
+            position: absolute;
+            font-size: 32px;
+            pointer-events: none;
+            animation: floatHeart 4s linear forwards;
+        }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(0) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-700px) scale(1.3); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -73,13 +92,13 @@
     </div>
 
     <div class="buttons">
-        <button id="yesBtn">Дааа 😍</button>
-        <button id="noBtn">Нет 😅</button>
+        <button id="yes">Дааа 😍</button>
+        <button id="no">Нет 😅</button>
     </div>
 </div>
 
 <!-- Второй экран -->
-<div class="container" id="second-screen" style="display:none">
+<div class="container" id="second-screen" style="display: none;">
     <h1>Ты уверена? 😔</h1>
     <div class="cat-container">
         <img src="cat.png" class="cat">
@@ -92,113 +111,83 @@
 </div>
 
 <!-- Третий экран -->
-<div class="container" id="third-screen" style="display:none">
+<div class="container" id="third-screen" style="display: none;">
     <h1>Выбери дату и время 💕</h1>
     <div class="cat-container">
         <img src="cat.png" class="cat">
     </div>
-    <input type="date" id="dateInput" style="width:100%; padding:16px; margin:10px 0; font-size:1.1em; border-radius:15px;">
-    <input type="time" id="timeInput" style="width:100%; padding:16px; margin:10px 0; font-size:1.1em; border-radius:15px;">
-    <button onclick="sendToTG()" style="background: linear-gradient(45deg,#ff4d6d,#ff6b8a); padding:22px; font-size:1.5em; margin-top:20px;">
+    
+    <input type="date" id="dateInput" style="width:80%; padding:15px; font-size:1.2em; margin:15px 0; border-radius:15px;">
+    <input type="time" id="timeInput" style="width:80%; padding:15px; font-size:1.2em; margin:15px 0; border-radius:15px;">
+    
+    <button onclick="sendToTG()" style="background: linear-gradient(45deg, #ff4d6d, #ff6b8a); padding:20px 50px; font-size:1.5em; margin-top:20px;">
         Отправить ему 💌
     </button>
 </div>
 
 <script>
-// === ОТЛАДКА ===
-console.log("Скрипт загружен");
-
-const yesBtn = document.getElementById('yesBtn');
-const noBtn = document.getElementById('noBtn');
-
-yesBtn.addEventListener('click', () => {
-    console.log("Кнопка ДА нажата!");
-    accept();
-});
-
-yesBtn.addEventListener('touchend', (e) => {
-    e.preventDefault();
-    console.log("Кнопка ДА нажата (touch)!");
-    accept();
-});
-
-noBtn.addEventListener('click', moveNoButton);
-noBtn.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    moveNoButton();
-});
-
 let noClickCount = 0;
 
-function moveNoButton() {
-    console.log("Кнопка НЕТ нажата");
+document.getElementById('yes').addEventListener('click', function() {
+    document.getElementById('main-screen').style.display = 'none';
+    document.getElementById('third-screen').style.display = 'block';
+});
+
+document.getElementById('no').addEventListener('click', function() {
     noClickCount++;
-
-    const container = document.querySelector('.buttons');
-    const maxX = container.offsetWidth - noBtn.offsetWidth - 40;
-    const maxY = container.offsetHeight - noBtn.offsetHeight - 40;
-
+    const btn = this;
+    
+    const maxX = window.innerWidth - 200;
+    const maxY = window.innerHeight - 150;
+    
     const x = Math.random() * maxX;
     const y = Math.random() * maxY;
-
-    noBtn.style.position = 'absolute';
-    noBtn.style.left = x + 'px';
-    noBtn.style.top = y + 'px';
+    
+    btn.style.position = 'absolute';
+    btn.style.left = x + 'px';
+    btn.style.top = y + 'px';
 
     if (noClickCount >= 5) {
         document.getElementById('main-screen').style.display = 'none';
-        document.getElementById('second-screen').style.display = 'flex';
+        document.getElementById('second-screen').style.display = 'block';
     }
-}
-
-function accept() {
-    console.log("Переход на выбор даты");
-    document.getElementById('main-screen').style.display = 'none';
-    document.getElementById('third-screen').style.display = 'flex';
-}
+});
 
 function goToDate() {
     document.getElementById('second-screen').style.display = 'none';
-    document.getElementById('third-screen').style.display = 'flex';
+    document.getElementById('third-screen').style.display = 'block';
 }
 
 function backToMain() {
     document.getElementById('second-screen').style.display = 'none';
-    document.getElementById('main-screen').style.display = 'flex';
+    document.getElementById('main-screen').style.display = 'block';
     noClickCount = 0;
 }
 
 function sendToTG() {
     const date = document.getElementById('dateInput').value;
     const time = document.getElementById('timeInput').value;
-    if (!date || !time) return alert("Выбери дату и время ❤️");
-    
+    if (!date || !time) {
+        alert("Выбери дату и время ❤️");
+        return;
+    }
     const text = encodeURIComponent(`Я свободна ${date} в ${time} 💕 Хочу с тобой гулять!`);
     window.location.href = `https://t.me/bibirobdiller?text=${text}`;
 }
 
 // Сердечки
 setInterval(() => {
-    const h = document.createElement('div');
-    h.style.position = 'fixed';
-    h.style.fontSize = '28px';
-    h.style.left = Math.random()*90 + 'vw';
-    h.style.top = '60vh';
-    h.style.animation = 'floatHeart 4.5s linear forwards';
-    h.innerHTML = '💖';
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 5000);
-}, 400);
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.innerHTML = '💖';
+    heart.style.left = Math.random() * 100 + 'vw';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+}, 300);
 
 window.onload = () => {
     document.getElementById('dateInput').min = new Date().toISOString().split('T')[0];
 };
 </script>
-
-<style>
-@keyframes floatHeart {
-    to { transform: translateY(-900px); opacity: 0; }
-}
-</style>
 </body>
 </html>
