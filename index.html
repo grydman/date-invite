@@ -1,257 +1,222 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>Для тебя 💖</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Segoe UI', Arial, sans-serif;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a8edea);
-        background-size: 400% 400%;
-        animation: gradient 15s ease infinite;
-        text-align: center;
-        color: white;
-        overflow: hidden;
-        height: 100vh;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Для тебя 💖</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a8edea);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+            min-height: 100vh;
+            touch-action: manipulation;
+        }
 
-    @keyframes gradient {
-        0% {background-position: 0% 50%;}
-        50% {background-position: 100% 50%;}
-        100% {background-position: 0% 50%;}
-    }
+        @keyframes gradient {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
 
-    .container {
-        position: relative;
-        z-index: 10;
-        max-width: 420px;
-        margin: 40px auto;
-        padding: 20px;
-    }
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 20px 15px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-    h1 {
-        font-size: 2.8em;
-        margin: 15px 0 5px;
-        text-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
+        h1 {
+            font-size: 2.4em;
+            margin: 10px 0 8px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.25);
+        }
 
-    h2 {
-        font-size: 1.6em;
-        margin: 10px 0 30px;
-        opacity: 0.95;
-    }
+        h2 {
+            font-size: 1.55em;
+            margin: 10px 0 25px;
+            line-height: 1.3;
+        }
 
-    .cat-container {
-        position: relative;
-        width: 260px;
-        margin: 20px auto;
-        filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3));
-    }
+        .cat-container {
+            width: 260px;
+            margin: 20px auto;
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3));
+            animation: catBob 3.5s ease-in-out infinite;
+        }
 
-    .cat {
-        width: 100%;
-        border-radius: 30px;
-        transition: transform 0.4s ease;
-    }
+        @keyframes catBob {
+            0%, 100% { transform: translateY(0) rotate(-4deg); }
+            50% { transform: translateY(-20px) rotate(4deg); }
+        }
 
-    .cat:hover {
-        transform: scale(1.08) rotate(3deg);
-    }
+        .cat {
+            width: 100%;
+            border-radius: 25px;
+        }
 
-    /* Анимация кота */
-    @keyframes catBob {
-        0%, 100% { transform: translateY(0) rotate(-5deg); }
-        50% { transform: translateY(-25px) rotate(5deg); }
-    }
+        /* Летающие сердечки */
+        .heart {
+            position: absolute;
+            font-size: 28px;
+            pointer-events: none;
+            animation: floatHeart 4.5s linear forwards;
+            z-index: 5;
+        }
 
-    .cat-container {
-        animation: catBob 3s ease-in-out infinite;
-    }
+        @keyframes floatHeart {
+            0% { transform: translateY(100px) scale(0.6); opacity: 0.9; }
+            100% { transform: translateY(-700px) scale(1.3); opacity: 0; }
+        }
 
-    /* Сердечки */
-    .heart {
-        position: absolute;
-        font-size: 30px;
-        color: #ff4d6d;
-        pointer-events: none;
-        animation: floatHeart 4s linear forwards;
-        z-index: 5;
-        text-shadow: 0 0 8px rgba(255,77,109,0.8);
-    }
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-top: 30px;
+        }
 
-    @keyframes floatHeart {
-        0% { transform: translateY(0) scale(0.5); opacity: 1; }
-        100% { transform: translateY(-600px) scale(1.2); opacity: 0; }
-    }
+        button {
+            padding: 18px 40px;
+            font-size: 1.45em;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            transition: all 0.3s ease;
+            min-height: 60px;
+        }
 
-    .buttons {
-        display: flex;
-        justify-content: center;
-        gap: 25px;
-        margin-top: 30px;
-        flex-wrap: wrap;
-    }
+        #yes {
+            background: linear-gradient(45deg, #ff4d6d, #ff6b8a);
+        }
 
-    button {
-        padding: 16px 35px;
-        font-size: 1.3em;
-        border-radius: 50px;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    }
+        #yes:active {
+            transform: scale(0.95);
+        }
 
-    #yes {
-        background: linear-gradient(45deg, #ff4d6d, #ff6b8a);
-        color: white;
-    }
+        #no {
+            background: #555;
+            position: relative;
+        }
 
-    #yes:hover {
-        transform: scale(1.1);
-        box-shadow: 0 12px 30px rgba(255,77,109,0.4);
-    }
+        /* Второй и третий экраны */
+        .screen { display: none; }
+        .active { display: flex !important; }
 
-    #no {
-        background: #666;
-        color: white;
-        position: relative;
-    }
+        input {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1em;
+            border-radius: 15px;
+            border: none;
+            margin: 12px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
 
-    /* Второе подтверждение */
-    .second-screen, .third-screen {
-        display: none;
-    }
-
-    .picker {
-        margin: 30px 0;
-    }
-
-    input {
-        padding: 14px 20px;
-        font-size: 1.1em;
-        border-radius: 15px;
-        border: none;
-        margin: 12px 0;
-        width: 85%;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    .message {
-        font-size: 1.4em;
-        margin: 30px 0;
-        line-height: 1.4;
-    }
-</style>
+        button.big {
+            padding: 18px 50px;
+            font-size: 1.4em;
+        }
+    </style>
 </head>
 <body>
 
-<div class="container" id="main-screen">
+<div class="container active" id="main-screen">
     <h1>Привет, красотка 💖</h1>
     <h2>Пойдёшь со мной гулять? 🥺</h2>
     
     <div class="cat-container">
-        <img src="cat.png" class="cat" id="cat-image">
+        <img src="cat.png" class="cat">
     </div>
 
     <div class="buttons">
         <button id="yes" onclick="accept()">Дааа 😍</button>
-        <button id="no" onmouseover="moveNoButton()">Нет 😅</button>
+        <button id="no" onmouseover="moveNoButton()" ontouchstart="moveNoButton()">Нет 😅</button>
     </div>
 </div>
 
-<!-- Второй экран: Ты уверена? -->
-<div class="container second-screen" id="second-screen">
+<!-- Второй экран -->
+<div class="container screen" id="second-screen">
     <h1>Ты уверена? 😔</h1>
     <div class="cat-container">
         <img src="cat.png" class="cat">
     </div>
-    <div class="message">Ну пожалуйста... 🥺</div>
+    <h2>Ну пожалуйста... 🥺</h2>
     <div class="buttons">
-        <button id="yes2" onclick="goToDatePicker()">Извини, да 😘</button>
+        <button onclick="goToDate()">Извини, да 😘</button>
         <button onclick="backToMain()">Нет, точно нет</button>
     </div>
 </div>
 
-<!-- Третий экран: Выбор даты -->
-<div class="container third-screen" id="third-screen">
+<!-- Третий экран -->
+<div class="container screen" id="third-screen">
     <h1>Выбери дату и время 💕</h1>
     <div class="cat-container">
         <img src="cat.png" class="cat">
     </div>
     
-    <div class="picker">
-        <input type="date" id="dateInput">
-        <input type="time" id="timeInput">
-    </div>
+    <input type="date" id="dateInput">
+    <input type="time" id="timeInput">
     
-    <button onclick="sendToTG()" style="background: linear-gradient(45deg, #ff4d6d, #ff6b8a); padding: 16px 40px; font-size: 1.3em;">
+    <button onclick="sendToTG()" class="big" style="background: linear-gradient(45deg, #ff4d6d, #ff6b8a); margin-top: 20px;">
         Отправить ему 💌
     </button>
 </div>
 
 <script>
-// Создаём летающие сердечки
 function createHeart() {
     const heart = document.createElement('div');
     heart.classList.add('heart');
-    heart.innerHTML = '💖';
+    heart.innerHTML = ['💖','❤️','💗','💘'][Math.floor(Math.random()*4)];
     heart.style.left = Math.random() * 100 + 'vw';
-    heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
-    heart.style.opacity = Math.random() * 0.7 + 0.6;
+    heart.style.animationDuration = (Math.random() * 3 + 3.5) + 's';
     document.body.appendChild(heart);
-    
-    setTimeout(() => heart.remove(), 7000);
+    setTimeout(() => heart.remove(), 8000);
 }
-
-setInterval(createHeart, 300);
+setInterval(createHeart, 280);
 
 // Движение кнопки "Нет"
-let noClickCount = 0;
-const noBtn = document.getElementById('no');
-
 function moveNoButton() {
-    const maxX = window.innerWidth - 150;
-    const maxY = window.innerHeight - 100;
+    const btn = document.getElementById('no');
+    const maxX = window.innerWidth - 160;
+    const maxY = window.innerHeight - 180;
     
-    const newX = Math.random() * maxX;
-    const newY = Math.random() * maxY;
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
     
-    noBtn.style.position = 'absolute';
-    noBtn.style.left = newX + 'px';
-    noBtn.style.top = newY + 'px';
-    
-    noClickCount++;
-    
-    // Если очень упорно пытается нажать
-    if (noClickCount > 6) {
-        document.getElementById('main-screen').style.display = 'none';
-        document.getElementById('second-screen').style.display = 'block';
-    }
+    btn.style.position = 'absolute';
+    btn.style.left = x + 'px';
+    btn.style.top = y + 'px';
 }
 
-// Клик по "Да" с первого экрана
+// Переходы между экранами
 function accept() {
-    document.getElementById('main-screen').style.display = 'none';
-    document.getElementById('third-screen').style.display = 'block';
+    document.getElementById('main-screen').classList.remove('active');
+    document.getElementById('third-screen').classList.add('active');
 }
 
-// Переход на выбор даты
-function goToDatePicker() {
-    document.getElementById('second-screen').style.display = 'none';
-    document.getElementById('third-screen').style.display = 'block';
+function goToDate() {
+    document.getElementById('second-screen').classList.remove('active');
+    document.getElementById('third-screen').classList.add('active');
 }
 
 function backToMain() {
-    document.getElementById('second-screen').style.display = 'none';
-    document.getElementById('main-screen').style.display = 'block';
-    noClickCount = 0;
+    document.getElementById('second-screen').classList.remove('active');
+    document.getElementById('main-screen').classList.add('active');
 }
 
-// Отправка в Telegram
 function sendToTG() {
     const date = document.getElementById('dateInput').value;
     const time = document.getElementById('timeInput').value;
@@ -265,17 +230,10 @@ function sendToTG() {
     window.location.href = `https://t.me/bibirobdiller?text=${text}`;
 }
 
-// Устанавливаем минимальную дату = сегодня
+// Инициализация
 window.onload = () => {
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('dateInput').min = today;
-    
-    // Дополнительная анимация кота при наведении
-    const cat = document.getElementById('cat-image');
-    cat.addEventListener('click', () => {
-        cat.style.transform = 'scale(1.3) rotate(15deg)';
-        setTimeout(() => cat.style.transform = '', 400);
-    });
 };
 </script>
 </body>
