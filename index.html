@@ -37,8 +37,8 @@
             justify-content: center;
         }
 
-        h1 { font-size: 2.3em; margin: 10px 0 8px; }
-        h2 { font-size: 1.5em; margin: 10px 0 30px; line-height: 1.3; }
+        h1 { font-size: 2.35em; margin: 10px 0 8px; }
+        h2 { font-size: 1.52em; margin: 10px 0 30px; line-height: 1.3; }
 
         .cat-container {
             width: 260px;
@@ -71,7 +71,7 @@
             gap: 22px;
             margin-top: 30px;
             position: relative;
-            min-height: 160px;
+            min-height: 170px;
         }
 
         button {
@@ -80,18 +80,12 @@
             border-radius: 50px;
             border: none;
             box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-            min-height: 70px;
+            min-height: 72px;
             touch-action: manipulation;
         }
 
-        #yes {
-            background: linear-gradient(45deg, #ff4d6d, #ff6b8a);
-        }
-
-        #no {
-            background: #555;
-            position: relative;
-        }
+        #yes { background: linear-gradient(45deg, #ff4d6d, #ff6b8a); }
+        #no { background: #555; position: relative; }
 
         .screen { display: none; }
         .active { display: flex !important; flex-direction: column; }
@@ -113,7 +107,7 @@
     </div>
 </div>
 
-<!-- Второй экран -->
+<!-- Второй экран — "Ты уверена?" -->
 <div class="container screen" id="second-screen">
     <h1>Ты уверена? 😔</h1>
     <div class="cat-container">
@@ -126,7 +120,7 @@
     </div>
 </div>
 
-<!-- Третий экран -->
+<!-- Третий экран — выбор даты -->
 <div class="container screen" id="third-screen">
     <h1>Выбери дату и время 💕</h1>
     <div class="cat-container">
@@ -142,29 +136,37 @@
 </div>
 
 <script>
-// === Кнопки с нормальной обработкой тачей ===
 const yesBtn = document.getElementById('yesBtn');
 const noBtn = document.getElementById('noBtn');
+let noClickCount = 0;
 
+// === Кнопка "Да" ===
 yesBtn.addEventListener('click', accept);
-yesBtn.addEventListener('touchend', accept);
+yesBtn.addEventListener('touchend', (e) => { e.preventDefault(); accept(); });
 
+// === Кнопка "Нет" ===
 noBtn.addEventListener('click', moveNoButton);
-noBtn.addEventListener('touchstart', moveNoButton);
+noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveNoButton(); });
 
-function moveNoButton(e) {
-    if (e) e.preventDefault();
+function moveNoButton() {
+    noClickCount++;
     
     const container = document.querySelector('.buttons');
-    const maxX = container.offsetWidth - noBtn.offsetWidth - 30;
-    const maxY = container.offsetHeight - noBtn.offsetHeight - 30;
+    const maxX = container.offsetWidth - noBtn.offsetWidth - 20;
+    const maxY = container.offsetHeight - noBtn.offsetHeight - 20;
     
     const x = Math.random() * maxX;
-    const y = 30 + Math.random() * maxY;
+    const y = Math.random() * maxY;
     
     noBtn.style.position = 'absolute';
     noBtn.style.left = x + 'px';
     noBtn.style.top = y + 'px';
+
+    // Если нажал 5+ раз — показываем экран "Ты уверена?"
+    if (noClickCount >= 5) {
+        document.getElementById('main-screen').classList.remove('active');
+        document.getElementById('second-screen').classList.add('active');
+    }
 }
 
 function accept() {
@@ -180,6 +182,7 @@ function goToDate() {
 function backToMain() {
     document.getElementById('second-screen').classList.remove('active');
     document.getElementById('main-screen').classList.add('active');
+    noClickCount = 0;
 }
 
 function sendToTG() {
@@ -193,13 +196,13 @@ function sendToTG() {
     window.location.href = `https://t.me/bibirobdiller?text=${text}`;
 }
 
-// Сердечки
+// Летающие сердечки
 function createHeart() {
     const heart = document.createElement('div');
     heart.classList.add('heart');
     heart.innerHTML = '💖';
     heart.style.left = Math.random() * 95 + 'vw';
-    heart.style.top = '50vh';
+    heart.style.top = '55vh';
     heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 9000);
